@@ -14,7 +14,7 @@
     <nav class="navbar navbar-light d-flex py-3 bg-light">
         <span class="navbar-brand mb-0">Search for a city:</span>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Enter a city..." aria-label="Search">
+            <input class="form-control mr-sm-2" type="search" placeholder="Enter city here" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         <span class="navbar-brand mb-0 mx-auto h1">Weather Dashboard</span>
@@ -23,11 +23,52 @@
       <main class="container-fluid vh-100">
           <div class="row d-felx h-100">
               <aside class="col-2" id="citylist">
-                City
+                <p>Searched Cities</p>
+                <ul class="searchhist">
+
+                </ul>
               </aside>
 
-              <section class="col-10">
-
+              <section class="col-10" id="currentcity">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12 d-flex" id="cityid">
+                      
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 d-flex flex-column" id="cityweather">
+                      <p id="temperature"></p>
+                      <p id="humidity"></p>
+                      <p id="windspeed"></p>
+                      <p id="uvindex"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <h2>5 Day Forecast</h2>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col forecast" id="dayone">
+                      
+                    </div>
+                    <div class="col forecast" id="daytwo">
+                      
+                    </div>
+                    <div class="col forecast" id="daythree">
+                      
+                    </div>
+                    <div class="col forecast" id="dayfour">
+                      
+                    </div>
+                    <div class="col forecast" id="dayfive">
+                      
+                    </div>
+                  </div>
+                </div>
               </section>
           </div>
       </main>

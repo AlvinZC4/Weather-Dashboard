@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+    var savedSerches = []
+
     // Function to clear display contents before repopulating the display with results from a new search
     function clearDisplayCurrent() {
         $("#cityname").text("")
@@ -167,8 +170,22 @@ $(document).ready(function() {
         var citySerched = $("#searchedcity").val().trim()
         console.log(citySerched)
 
+        savedSerches.push(citySerched)
+
+        var savedButton = $("<li>")
+        savedButton.addClass("savedsearch my-1")
+        savedButton.attr("cityname", citySerched)
+        savedButton.text(citySerched)
+        $("#searchlist").prepend(savedButton)
+
         displayCityWeather(citySerched)
         displayCityForecast(citySerched)
+    })
+
+    $(document).on("click", ".savedsearch", function() {
+        var city = $(this).attr("cityname")
+        displayCityWeather(city)
+        displayCityForecast(city)
     })
 
 })

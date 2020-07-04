@@ -67,6 +67,7 @@ $(document).ready(function() {
             var cityLat = response.coord.lat
             var cityLon = response.coord.lon
             var cityTempKev = response.main.temp
+            var currentIcon = response.weather[0].icon
             
             // Execute the converTime function from line 12
             var cityDateSTND = convertTime(cityDateDT)
@@ -76,7 +77,7 @@ $(document).ready(function() {
             // Display elements of retured obejct on html
             $("#cityname").text(cityName)
             $("#citydate").text(cityDateSTND)
-
+            $("#currenticon").attr("src", "http://openweathermap.org/img/wn/" + currentIcon + ".png")
             $("#temperature").text("Temperature: " + cityTempF)
             $("#humidity").text("Humidity: " + response.main.humidity)
             $("#windspeed").text("Windspeed: " + response.wind.speed)
@@ -91,8 +92,6 @@ $(document).ready(function() {
             }).then(function(uvResponse) {
                 $("#uvindex").text("UV Index: " + uvResponse.value)
             })
-
-            
 
         })
     }
@@ -119,6 +118,11 @@ $(document).ready(function() {
             var dayThreeTempKev = response.list[19].main.temp
             var dayFourTempKev = response.list[27].main.temp
             var dayFiveTempKev = response.list[35].main.temp
+            var dayOneIcon = response.list[3].weather[0].icon
+            var dayTwoIcon = response.list[11].weather[0].icon
+            var dayThreeIcon = response.list[19].weather[0].icon
+            var dayFourIcon = response.list[27].weather[0].icon
+            var dayFiveIcon = response.list[35].weather[0].icon
 
             var dayOneDateSTND = convertTime(dayOneDateDT)
             var dayTwoDateSTND = convertTime(dayTwoDateDT)
@@ -132,23 +136,27 @@ $(document).ready(function() {
             var dayFiveTempF = convertTemp(dayFiveTempKev)
 
             $("#dayonedate").text(dayOneDateSTND)
-
+            $("#dayoneicon").attr("src", "http://openweathermap.org/img/wn/" + dayOneIcon + ".png")
             $("#dayonetemp").text("Temp: " + dayOneTempF)
             $("#dayonehumidity").text("Humidity :" + response.list[3].main.humidity)
-            $("#daytwodate").text(dayTwoDateSTND)
 
+            $("#daytwodate").text(dayTwoDateSTND)
+            $("#daytwoicon").attr("src", "http://openweathermap.org/img/wn/" + dayTwoIcon + ".png")
             $("#daytwotemp").text("Temp: " + dayTwoTempF)
             $("#daytwohumidity").text("Humidity :" + response.list[11].main.humidity)
-            $("#daythreedate").text(dayThreeDateSTND)
 
+            $("#daythreedate").text(dayThreeDateSTND)
+            $("#daythreeicon").attr("src", "http://openweathermap.org/img/wn/" + dayThreeIcon + ".png")
             $("#daythreetemp").text("Temp: " + dayThreeTempF)
             $("#daythreehumidity").text("Humidity :" + response.list[19].main.humidity)
-            $("#dayfourdate").text(dayFourDateSTND)
 
+            $("#dayfourdate").text(dayFourDateSTND)
+            $("#dayfouricon").attr("src", "http://openweathermap.org/img/wn/" + dayFourIcon + ".png")
             $("#dayfourtemp").text("Temp: " + dayFourTempF)
             $("#dayfourhumidity").text("Humidity :" + response.list[27].main.humidity)
-            $("#dayfivedate").text(dayFiveDateSTND)
 
+            $("#dayfivedate").text(dayFiveDateSTND)
+            $("#dayfiveicon").attr("src", "http://openweathermap.org/img/wn/" + dayFiveIcon + ".png")
             $("#dayfivetemp").text("Temp: " + dayFiveTempF)
             $("#dayfivehumidity").text("Humidity :" + response.list[35].main.humidity)
         })

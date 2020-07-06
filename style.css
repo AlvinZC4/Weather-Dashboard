@@ -2,6 +2,19 @@
     cursor: pointer;
 }
 
+.savedsearch:hover {
+    background-color: navy;
+    color: white;
+    border-style: solid;
+    border-color: white;
+}
+
+.forecast {
+    border-radius: 25px;
+    background-color: blue;
+    color: white;
+}
+
 #citylist {
     height: 100%;
     background-color: aqua;
@@ -9,4 +22,13 @@
 
 #currentcity {
     display: none;
+}
+
+#currentconditions {
+    border-style: solid;
+    border-color: black;
+}
+
+#uvindex {
+    border-radius: 10px;
 }

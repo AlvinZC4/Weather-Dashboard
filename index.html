@@ -23,15 +23,15 @@
 
       <main class="container-fluid vh-100">
           <div class="row d-felx h-100">
-              <aside class="col-2" id="citylist">
+              <aside class="col-4 col-sm-2" id="citylist">
                 <p>Searched Cities</p>
                 <div id="searchlist">
 
                 </div>
               </aside>
 
-              <section class="col-10" id="currentcity">
-                <div class="container">
+              <section class="col-8 col-sm-10" id="currentcity">
+                <div class="container" id="currentconditions">
                   <div class="row">
                     <div class="col-auto d-flex">
                       <h1 class="currentcityinfo" id="cityname"></h1>
@@ -44,11 +44,11 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-12 d-flex flex-column" id="cityweather">
-                      <p class="currentweathercond" id="temperature"></p>
-                      <p class="currentweathercond" id="humidity"></p>
-                      <p class="currentweathercond" id="windspeed"></p>
-                      <p class="currentweathercond" id="uvindex"></p>
+                    <div class="col-12 d-inline-flex flex-column" id="cityweather">
+                      <p class="currentweathercond mr-auto" id="temperature"></p>
+                      <p class="currentweathercond mr-auto" id="humidity"></p>
+                      <p class="currentweathercond mr-auto" id="windspeed"></p>
+                      <p class="currentweathercond mr-auto" id="uvindex"></p>
                     </div>
                   </div>
                 </div>
@@ -59,35 +59,35 @@
                     </div>
                   </div>
                   <div class="row mt-2">
-                    <div class="col-2 mx-2 p-1 forecast" id="dayone">
+                    <div class="col-6 col-md-4 col-xl-2 mx-2 my-2 p-1 forecast" id="dayone">
                       <h3 class="dayone" id="dayonedate"></h3>
                       <img id="dayoneicon" src="" alt="Day One Forecast">
                       <p class="dayone" id="dayonetemp"></p>
                       <p class="dayone" id="dayonehumidity"></p>
                     </div>
 
-                    <div class="col-2 mx-2 p-1 forecast" id="daytwo">
+                    <div class="col-6 col-md-4 col-xl-2 mx-2 my-2 p-1 forecast" id="daytwo">
                       <h3 class="daytwo" id="daytwodate"></h3>
                       <img id="daytwoicon" src="" alt="Day Two Forecast">
                       <p class="daytwo" id="daytwotemp"></p>
                       <p class="daytwo" id="daytwohumidity"></p>
                     </div>
 
-                    <div class="col-2 mx-2 p-1 forecast" id="daythree">
+                    <div class="col-6 col-md-4 col-xl-2 mx-2 my-2 p-1 forecast" id="daythree">
                       <h3 class="daythree" id="daythreedate"></h3>
                       <img id="daythreeicon" src="" alt="Day Three Forecast">
                       <p class="daythree" id="daythreetemp"></p>
                       <p class="daythree" id="daythreehumidity"></p>
                     </div>
 
-                    <div class="col-2 mx-2 p-1 forecast" id="dayfour">
+                    <div class="col-6 col-md-4 col-xl-2 mx-2 my-2 p-1 forecast" id="dayfour">
                       <h3 class="dayfour" id="dayfourdate"></h3>
                       <img id="dayfouricon" src="" alt="Day Four Forecast">
                       <p class="dayfour" id="dayfourtemp"></p>
                       <p class="dayfour" id="dayfourhumidity"></p>
                     </div>
 
-                    <div class="col-2 mx-2 p-1 forecast" id="dayfive">
+                    <div class="col-6 col-md-4 col-xl-2 mx-2 my-2 p-1 forecast" id="dayfive">
                       <h3 class="dayfive" id="dayfivedate"></h3>
                       <img id="dayfiveicon" src="" alt="Day Five Forecast">
                       <p class="dayfive" id="dayfivetemp"></p>

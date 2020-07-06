@@ -37,7 +37,7 @@ $(document).ready(function() {
         var btnText = cityHere
         var savedButton = $("<p>")
         savedButton.addClass("savedsearch my-1")
-        savedButton.attr("cityname", btnText)
+        savedButton.attr("data-cityname", btnText)
         savedButton.text(btnText)
         $("#searchlist").prepend(savedButton)
     }
@@ -123,9 +123,9 @@ $(document).ready(function() {
             $("#cityname").text(cityName)
             $("#citydate").text(cityDateSTND)
             $("#currenticon").attr("src", "http://openweathermap.org/img/wn/" + currentIcon + ".png")
-            $("#temperature").text("Temperature: " + cityTempF)
-            $("#humidity").text("Humidity: " + response.main.humidity)
-            $("#windspeed").text("Windspeed: " + response.wind.speed)
+            $("#temperature").text("Temperature: " + cityTempF + "°F")
+            $("#humidity").text("Humidity: " + response.main.humidity + "%")
+            $("#windspeed").text("Windspeed: " + response.wind.speed + " MPH")
 
             // A different URL is used to obtain the UV Index of the searched city.  Use Latitude and Longitude obtained form the first ajax call
             var queryULRuv = "http://api.openweathermap.org/data/2.5/uvi?appid=454601f0e3a2d5cad022194c58ec0c3a&lat=" + cityLat + "&lon=" + cityLon
@@ -135,7 +135,28 @@ $(document).ready(function() {
                 url: queryULRuv,
                 method: "GET"
             }).then(function(uvResponse) {
-                $("#uvindex").text("UV Index: " + uvResponse.value)
+                var uvIndex = uvResponse.value
+
+                $("#uvindex").text("UV Index: " + uvIndex)
+
+                // background color and text color for uvindex is dependant on how high the uvindex is
+                if (uvIndex < 3) {
+                    $("#uvindex").css("background-color", "lightgreen")
+                    $("#uvindex").css("color", "white")
+
+                }
+                else if (uvIndex < 6) {
+                    $("#uvindex").css("background-color", "yellow")
+                    $("#uvindex").css("color", "black")
+                }
+                else if (uvIndex < 8) {
+                    $("#uvindex").css("background-color", "orange")
+                    $("#uvindex").css("color", "white")
+                }
+                else {
+                    $("#uvindex").css("background-color", "red")
+                    $("#uvindex").css("color", "white")
+                }
             })
 
         })
@@ -229,8 +250,9 @@ $(document).ready(function() {
 
         // Pushes the searched city to an array
         thisSessionSearches.push(citySearched)
-
+        console.log(thisSessionSearches)
         // Run fuction to generate button for a previously searched city
+        
         listCities(citySearched)
 
         localStorage.setItem("savedCities", JSON.stringify(thisSessionSearches))

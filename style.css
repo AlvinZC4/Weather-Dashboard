@@ -1,4 +1,12 @@
+.savedsearch {
+    cursor: pointer;
+}
+
 #citylist {
     height: 100%;
     background-color: aqua;
+}
+
+#currentcity {
+    display: none;
 }

@@ -1,8 +1,48 @@
 $(document).ready(function() {
 
-    var savedSerches = []
+    // Assign global variables
+    var showDisplay = false
+    var thisSessionSearches = [];
 
-    // Function to clear display contents before repopulating the display with results from a new search
+    // function to toggle weather (this is used to hide broken and empty html elements when no city is displayed)
+    function toggleDisplay() {
+        if (showDisplay) {
+            $("#currentcity").css("display", "initial")
+        }
+        else {
+            $("#currentcity").css("display", "none")
+        }
+    }
+
+    // function to get searches saved in local storage
+    function getSavedSearches() {
+        savedSearches = JSON.parse(localStorage.getItem("savedCities"))
+
+        if (!savedSearches) {
+            return
+        }
+
+        for (var i = 0; i < savedSearches.length; i++) {
+            listCities(savedSearches[i])
+        }
+
+        displayCityWeather(savedSearches[savedSearches.length - 1])
+        displayCityForecast(savedSearches[savedSearches.length - 1])
+
+        showDisplay = true
+        toggleDisplay()
+    }
+    // Function to generate a button for a previously searched city
+    function listCities(cityHere) {
+        var btnText = cityHere
+        var savedButton = $("<p>")
+        savedButton.addClass("savedsearch my-1")
+        savedButton.attr("cityname", btnText)
+        savedButton.text(btnText)
+        $("#searchlist").prepend(savedButton)
+    }
+
+    // Function to clear current weather display contents before repopulating the display with results from a new search
     function clearDisplayCurrent() {
         $("#cityname").text("")
         $("#citydate").text("")
@@ -11,6 +51,7 @@ $(document).ready(function() {
         $("#windspeed").text("")
     }
 
+    // function to clear forecast display contents before repopulating the display with results from new search
     function clearDisplayForecast() {
         $("#dayonedate").text("")
 
@@ -43,6 +84,7 @@ $(document).ready(function() {
         return time
     }
 
+    // function to convert temperature from kelvin to fahrenhiet
     function convertTemp(tempKev) {
        var tempFlng = (tempKev - 273.15) * 1.80 + 32
        var tempF = tempFlng.toFixed(2)
@@ -62,7 +104,6 @@ $(document).ready(function() {
             url: queryURL,
             method: "GET"
         }).then(function(response) {
-            // console.log(response)
 
             // Declare variables that contain data from the obejct returned form the ajax call to display data or use to generate more data
             var cityName = response.name
@@ -72,9 +113,10 @@ $(document).ready(function() {
             var cityTempKev = response.main.temp
             var currentIcon = response.weather[0].icon
             
-            // Execute the converTime function from line 12
+            // Execute the converTime function
             var cityDateSTND = convertTime(cityDateDT)
 
+            // Execute the convertTemp function
             var cityTempF = convertTemp(cityTempKev)
 
             // Display elements of retured obejct on html
@@ -99,6 +141,7 @@ $(document).ready(function() {
         })
     }
 
+    // function to display the 5 day forecast for the searched city
     function displayCityForecast(selectedCity) {
         clearDisplayForecast()
 
@@ -109,8 +152,8 @@ $(document).ready(function() {
             url: queryURL,
             method: "GET"
         }).then(function(response) {
-            console.log(response)
 
+            // storing elements from the returned object in variables
             var dayOneDateDT = response.list[3].dt
             var dayTwoDateDT = response.list[11].dt
             var dayThreeDateDT = response.list[19].dt
@@ -127,6 +170,7 @@ $(document).ready(function() {
             var dayFourIcon = response.list[27].weather[0].icon
             var dayFiveIcon = response.list[35].weather[0].icon
 
+            // Executing the convertTime and convertTemp functions for for each of the 5 days of the forecast
             var dayOneDateSTND = convertTime(dayOneDateDT)
             var dayTwoDateSTND = convertTime(dayTwoDateDT)
             var dayThreeDateSTND = convertTime(dayThreeDateDT)
@@ -137,7 +181,8 @@ $(document).ready(function() {
             var dayThreeTempF = convertTemp(dayThreeTempKev)
             var dayFourTempF = convertTemp(dayFourTempKev)
             var dayFiveTempF = convertTemp(dayFiveTempKev)
-
+            
+            // Show the forecast for each of the 5 days
             $("#dayonedate").text(dayOneDateSTND)
             $("#dayoneicon").attr("src", "http://openweathermap.org/img/wn/" + dayOneIcon + ".png")
             $("#dayonetemp").text("Temp: " + dayOneTempF)
@@ -165,27 +210,57 @@ $(document).ready(function() {
         })
     }
 
+    // Event listener for the search function; searches for the city typed into the search bar
     $("#submitsearch").on("click", function(event) {
         event.preventDefault()
-        var citySerched = $("#searchedcity").val().trim()
-        console.log(citySerched)
+        var citySearched = $("#searchedcity").val().trim()
 
-        savedSerches.push(citySerched)
+        // Ensures the search function does not return a null value if the search bar is empty when the search button is clicked
+        if (!citySearched) {
+            return
+        }
 
-        var savedButton = $("<li>")
-        savedButton.addClass("savedsearch my-1")
-        savedButton.attr("cityname", citySerched)
-        savedButton.text(citySerched)
-        $("#searchlist").prepend(savedButton)
+        // Prevents duplicate entries on the list of previously searched cities
+        for (var j = 0; j < thisSessionSearches.length; j++) {
+            if (citySearched === thisSessionSearches[j]) {
+                return
+            }
+        }
 
-        displayCityWeather(citySerched)
-        displayCityForecast(citySerched)
+        // Pushes the searched city to an array
+        thisSessionSearches.push(citySearched)
+
+        // Run fuction to generate button for a previously searched city
+        listCities(citySearched)
+
+        localStorage.setItem("savedCities", JSON.stringify(thisSessionSearches))
+
+        displayCityWeather(citySearched)
+        displayCityForecast(citySearched)
+
+        showDisplay = true
+        toggleDisplay()
     })
 
+    // clear local storage and the list of previously searched cities when the "clear search history" button is clicked
+    $("#clearsearch").on("click", function() {
+        localStorage.clear()
+        thisSessionSearches = []
+        $("searchlist").empty()
+
+        showDisplay = false
+        toggleDisplay()
+    })
+
+    // Event listener for each of the dynamically generated buttons for the previously searched cities
     $(document).on("click", ".savedsearch", function() {
         var city = $(this).attr("cityname")
         displayCityWeather(city)
         displayCityForecast(city)
     })
+    
+
+    getSavedSearches();
+    toggleDisplay();
 
 })

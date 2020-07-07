@@ -276,7 +276,7 @@ $(document).ready(function() {
 
     // Event listener for each of the dynamically generated buttons for the previously searched cities
     $(document).on("click", ".savedsearch", function() {
-        var city = $(this).attr("cityname")
+        var city = $(this).attr("data-cityname")
         displayCityWeather(city)
         displayCityForecast(city)
     })

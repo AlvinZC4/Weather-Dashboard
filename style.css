@@ -15,9 +15,14 @@
     color: white;
 }
 
+.navbar {
+    border-bottom: double 5px black;
+}
+
 #citylist {
     height: 100%;
     background-color: aqua;
+    border-right: 5px double black; 
 }
 
 #currentcity {
